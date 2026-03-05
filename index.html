@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
@@ -8,14 +7,13 @@
 <style>
 
 body{
-    
-    font-family: Arial;
-    background: beige;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    margin:0;
+font-family: Arial;
+background: beige;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+margin:0;
 }
 
 .container{
@@ -24,43 +22,56 @@ width:420px;
 text-align:center;
 }
 
-  
-
-h1{
-    margin-bottom:20px;
-}
-
 select{
-    width:80%;
-    padding:10px;
-    margin:8px;
-    font-size:16px;
-    border-radius:8px;
+width:80%;
+padding:10px;
+margin:8px;
+font-size:16px;
+border-radius:8px;
 }
 
 button{
-    background:purple;
-    color:white;
-    border:none;
-    padding:12px 25px;
-    font-size:16px;
-    border-radius:8px;
-    cursor:pointer;
-    margin-top:10px;
+background:purple;
+color:white;
+border:none;
+padding:12px 25px;
+font-size:16px;
+border-radius:8px;
+cursor:pointer;
+margin-top:10px;
 }
 
 button:hover{
-    background:#1e3c72;
+background:#1e3c72;
 }
 
 .result{
-    margin-top:20px;
-    font-size:22px;
-    font-weight:bold;
+margin-top:20px;
+font-size:22px;
+font-weight:bold;
+}
+
+/* REZYSTOR */
+
+.resistor{
+margin:20px auto;
+width:250px;
+height:40px;
+background:#d2a679;
+border-radius:20px;
+position:relative;
+display:flex;
+justify-content:space-around;
+align-items:center;
+}
+
+.band{
+width:10px;
+height:100%;
+background:black;
 }
 
 </style>
-
 </head>
 
 <body>
@@ -69,40 +80,47 @@ button:hover{
 
 <h1>Kalkulator Rezystorów</h1>
 
-<select id="band1">
-<option value="0">Czarny</option>
-<option value="1">Brązowy</option>
-<option value="2">Czerwony</option>
-<option value="3">Pomarańczowy</option>
-<option value="4">Żółty</option>
-<option value="5">Zielony</option>
-<option value="6">Niebieski</option>
-<option value="7">Fioletowy</option>
-<option value="8">Szary</option>
-<option value="9">Biały</option>
+<!-- REZYSTOR -->
+<div class="resistor">
+<div class="band" id="b1"></div>
+<div class="band" id="b2"></div>
+<div class="band" id="b3"></div>
+</div>
+
+<select id="band1" onchange="updateColors()">
+<option value="0" data-color="black">Czarny</option>
+<option value="1" data-color="brown">Brązowy</option>
+<option value="2" data-color="red">Czerwony</option>
+<option value="3" data-color="orange">Pomarańczowy</option>
+<option value="4" data-color="yellow">Żółty</option>
+<option value="5" data-color="green">Zielony</option>
+<option value="6" data-color="blue">Niebieski</option>
+<option value="7" data-color="violet">Fioletowy</option>
+<option value="8" data-color="gray">Szary</option>
+<option value="9" data-color="white">Biały</option>
 </select>
 
-<select id="band2">
-<option value="0">Czarny</option>
-<option value="1">Brązowy</option>
-<option value="2">Czerwony</option>
-<option value="3">Pomarańczowy</option>
-<option value="4">Żółty</option>
-<option value="5">Zielony</option>
-<option value="6">Niebieski</option>
-<option value="7">Fioletowy</option>
-<option value="8">Szary</option>
-<option value="9">Biały</option>
+<select id="band2" onchange="updateColors()">
+<option value="0" data-color="black">Czarny</option>
+<option value="1" data-color="brown">Brązowy</option>
+<option value="2" data-color="red">Czerwony</option>
+<option value="3" data-color="orange">Pomarańczowy</option>
+<option value="4" data-color="yellow">Żółty</option>
+<option value="5" data-color="green">Zielony</option>
+<option value="6" data-color="blue">Niebieski</option>
+<option value="7" data-color="violet">Fioletowy</option>
+<option value="8" data-color="gray">Szary</option>
+<option value="9" data-color="white">Biały</option>
 </select>
 
-<select id="multiplier">
-<option value="1">Czarny ×1</option>
-<option value="10">Brązowy ×10</option>
-<option value="100">Czerwony ×100</option>
-<option value="1000">Pomarańczowy ×1k</option>
-<option value="10000">Żółty ×10k</option>
-<option value="100000">Zielony ×100k</option>
-<option value="1000000">Niebieski ×1M</option>
+<select id="multiplier" onchange="updateColors()">
+<option value="1" data-color="black">Czarny ×1</option>
+<option value="10" data-color="brown">Brązowy ×10</option>
+<option value="100" data-color="red">Czerwony ×100</option>
+<option value="1000" data-color="orange">Pomarańczowy ×1k</option>
+<option value="10000" data-color="yellow">Żółty ×10k</option>
+<option value="100000" data-color="green">Zielony ×100k</option>
+<option value="1000000" data-color="blue">Niebieski ×1M</option>
 </select>
 
 <select id="tolerance">
@@ -121,6 +139,22 @@ button:hover{
 </div>
 
 <script>
+
+function updateColors(){
+
+let band1 = document.getElementById("band1");
+let band2 = document.getElementById("band2");
+let multiplier = document.getElementById("multiplier");
+
+let color1 = band1.options[band1.selectedIndex].dataset.color;
+let color2 = band2.options[band2.selectedIndex].dataset.color;
+let color3 = multiplier.options[multiplier.selectedIndex].dataset.color;
+
+document.getElementById("b1").style.background = color1;
+document.getElementById("b2").style.background = color2;
+document.getElementById("b3").style.background = color3;
+
+}
 
 function calc(){
 
@@ -148,9 +182,12 @@ document.getElementById("result").innerHTML =
 
 }
 
+updateColors();
+
 </script>
 
 </body>
 </html>
+
 
 

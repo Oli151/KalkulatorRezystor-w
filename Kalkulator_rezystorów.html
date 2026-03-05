@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Kalkulator Rezystorów</title>
+
+<style>
+
+body{
+    
+    font-family: Arial;
+    background: beige;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:0;
+}
+
+.container{
+padding:35px;
+width:420px;
+text-align:center;
+}
+
+  
+
+h1{
+    margin-bottom:20px;
+}
+
+select{
+    width:80%;
+    padding:10px;
+    margin:8px;
+    font-size:16px;
+    border-radius:8px;
+}
+
+button{
+    background:purple;
+    color:white;
+    border:none;
+    padding:12px 25px;
+    font-size:16px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+button:hover{
+    background:#1e3c72;
+}
+
+.result{
+    margin-top:20px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Kalkulator Rezystorów</h1>
+
+<select id="band1">
+<option value="0">Czarny</option>
+<option value="1">Brązowy</option>
+<option value="2">Czerwony</option>
+<option value="3">Pomarańczowy</option>
+<option value="4">Żółty</option>
+<option value="5">Zielony</option>
+<option value="6">Niebieski</option>
+<option value="7">Fioletowy</option>
+<option value="8">Szary</option>
+<option value="9">Biały</option>
+</select>
+
+<select id="band2">
+<option value="0">Czarny</option>
+<option value="1">Brązowy</option>
+<option value="2">Czerwony</option>
+<option value="3">Pomarańczowy</option>
+<option value="4">Żółty</option>
+<option value="5">Zielony</option>
+<option value="6">Niebieski</option>
+<option value="7">Fioletowy</option>
+<option value="8">Szary</option>
+<option value="9">Biały</option>
+</select>
+
+<select id="multiplier">
+<option value="1">Czarny ×1</option>
+<option value="10">Brązowy ×10</option>
+<option value="100">Czerwony ×100</option>
+<option value="1000">Pomarańczowy ×1k</option>
+<option value="10000">Żółty ×10k</option>
+<option value="100000">Zielony ×100k</option>
+<option value="1000000">Niebieski ×1M</option>
+</select>
+
+<select id="tolerance">
+<option>±1%</option>
+<option>±2%</option>
+<option>±5%</option>
+<option>±10%</option>
+</select>
+
+<br>
+
+<button onclick="calc()">Oblicz</button>
+
+<div class="result" id="result">---</div>
+
+</div>
+
+<script>
+
+function calc(){
+
+let b1 = document.getElementById("band1").value;
+let b2 = document.getElementById("band2").value;
+let m = document.getElementById("multiplier").value;
+let t = document.getElementById("tolerance").value;
+
+let value = (b1*10 + Number(b2)) * m;
+
+let text;
+
+if(value>=1000000){
+text=(value/1000000)+" MΩ";
+}
+else if(value>=1000){
+text=(value/1000)+" kΩ";
+}
+else{
+text=value+" Ω";
+}
+
+document.getElementById("result").innerHTML =
+"Wartość: "+text+" "+t;
+
+}
+
+</script>
+
+</body>
+</html>
+

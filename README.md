@@ -1,0 +1,1 @@
+# KalkulatorRezystor-w

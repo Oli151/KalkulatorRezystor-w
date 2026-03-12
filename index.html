@@ -23,7 +23,7 @@ padding:30px;
 
 .resistor{
 margin:20px auto;
-width:260px;
+width:320px;
 height:50px;
 background:#d2a679;
 border-radius:25px;
@@ -34,7 +34,7 @@ padding:0 20px;
 }
 
 .band{
-width:14px;
+width:12px;
 height:100%;
 background:black;
 cursor:pointer;
@@ -58,13 +58,15 @@ margin-top:20px;
 
 <div class="container">
 
-<h2>Kalkulator Rezystorów</h2>
+<h2>Kalkulator Rezystorów (5 pasków)</h2>
 <p>Kliknij pasek aby zmienić kolor</p>
 
 <div class="resistor">
 <div class="band" id="b1" onclick="selectBand(0)"></div>
 <div class="band" id="b2" onclick="selectBand(1)"></div>
 <div class="band" id="b3" onclick="selectBand(2)"></div>
+<div class="band" id="b4" onclick="selectBand(3)"></div>
+<div class="band" id="b5" onclick="selectBand(4)"></div>
 </div>
 
 <div class="sliderBox" id="sliderBox">
@@ -100,39 +102,55 @@ let multipliers = [
 {color:"blue", value:1000000}
 ];
 
-let bandIndex=[1,0,0];
+let tolerance = [
+{color:"brown", value:"±1%"},
+{color:"red", value:"±2%"},
+{color:"green", value:"±0.5%"},
+{color:"blue", value:"±0.25%"},
+{color:"violet", value:"±0.1%"},
+{color:"gray", value:"±0.05%"},
+{color:"gold", value:"±5%"},
+{color:"silver", value:"±10%"}
+];
+
+let bandIndex=[1,0,0,0,6];
 let activeBand=0;
 
 function selectBand(b){
 
 activeBand=b;
-
 document.getElementById("sliderBox").style.display="block";
 
-if(b<2){
+if(b<3){
 document.getElementById("slider").max=9;
-document.getElementById("slider").value=bandIndex[b];
+}
+else if(b==3){
+document.getElementById("slider").max=6;
 }
 else{
-document.getElementById("slider").max=6;
-document.getElementById("slider").value=bandIndex[b];
+document.getElementById("slider").max=7;
 }
+
+document.getElementById("slider").value=bandIndex[b];
 
 }
 
 function changeColor(){
 
 let val=document.getElementById("slider").value;
-
 bandIndex[activeBand]=Number(val);
 
-if(activeBand<2){
+if(activeBand<3){
 document.getElementById("b"+(activeBand+1)).style.background=
 colors[val].color;
 }
-else{
-document.getElementById("b3").style.background=
+else if(activeBand==3){
+document.getElementById("b4").style.background=
 multipliers[val].color;
+}
+else{
+document.getElementById("b5").style.background=
+tolerance[val].color;
 }
 
 calc();
@@ -143,9 +161,11 @@ function calc(){
 
 let b1=colors[bandIndex[0]].value;
 let b2=colors[bandIndex[1]].value;
-let m=multipliers[bandIndex[2]].value;
+let b3=colors[bandIndex[2]].value;
+let m=multipliers[bandIndex[3]].value;
+let t=tolerance[bandIndex[4]].value;
 
-let value=(b1*10+b2)*m;
+let value=(b1*100+b2*10+b3)*m;
 
 let text;
 
@@ -159,13 +179,16 @@ else{
 text=value+" Ω";
 }
 
-document.getElementById("result").innerHTML="Wartość: "+text;
+document.getElementById("result").innerHTML=
+"Wartość: "+text+" "+t;
 
 }
 
 document.getElementById("b1").style.background=colors[1].color;
 document.getElementById("b2").style.background=colors[0].color;
-document.getElementById("b3").style.background=multipliers[0].color;
+document.getElementById("b3").style.background=colors[0].color;
+document.getElementById("b4").style.background=multipliers[0].color;
+document.getElementById("b5").style.background=tolerance[6].color;
 
 calc();
 
@@ -173,3 +196,4 @@ calc();
 
 </body>
 </html>
+
